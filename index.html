@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extractor de Texto Automático</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .method {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .method h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .method p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .button-area {
+            background: #fff;
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button, .btn-link {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+        
+        .steps {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .steps ol {
+            margin-left: 20px;
+            color: #1e40af;
+            line-height: 1.8;
+        }
+        
+        .steps li {
+            margin: 8px 0;
+        }
+        
+        .alert {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #92400e;
+        }
+        
+        .alert strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        #resultado {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            margin-top: 10px;
+        }
+        
+        .stats {
+            text-align: right;
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Extractor de Texto Automático</h1>
+        <p class="subtitle">Extrae texto de páginas web de forma automática</p>
+        
+        <!-- MÉTODO 1: Bookmarklet mejorado -->
+        <div class="method">
+            <h2>📌 Método 1: Bookmarklet (Recomendado)</h2>
+            <p>Arrastra este botón a tu barra de marcadores. Cuando hagas clic en él, extraerá el texto de la página actual automáticamente.</p>
+            
+            <div class="button-area">
+                <a href="javascript:(function(){let t=document.body.innerText;let c=t.length;let w=t.split(/\s+/).filter(p=>p).length;navigator.clipboard.writeText(t).then(()=>{let d=document.createElement('div');d.innerHTML=`<div style='position:fixed;top:20px;right:20px;background:linear-gradient(135deg,%2310b981,%23059669);color:white;padding:20px 30px;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,0.3);z-index:999999;font-family:system-ui,sans-serif;animation:slideIn 0.3s ease'><div style='font-size:24px;margin-bottom:10px'>✅ ¡Texto Copiado!</div><div style='font-size:14px;opacity:0.9'>${c.toLocaleString()} caracteres • ${w.toLocaleString()} palabras</div><div style='margin-top:15px;display:flex;gap:10px'><button onclick='descargar()' style='background:white;color:%2310b981;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600'>💾 Descargar</button><button onclick='this.parentElement.parentElement.parentElement.remove()' style='background:rgba(255,255,255,0.2);color:white;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600'>✕ Cerrar</button></div></div><style>@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}</style>`;document.body.appendChild(d);window.textoExtraido=t;window.descargar=function(){let b=new Blob([t],{type:'text/plain'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download='texto-'+Date.now()+'.txt';a.click();URL.revokeObjectURL(u)};setTimeout(()=>d.remove(),8000)}).catch(()=>{alert('Texto extraído:\n\n'+t.substring(0,500)+'...\n\n('+c+' caracteres)')})})();" class="btn-link btn-primary" draggable="true">
+                    🚀 Extraer Texto
+                </a>
+            </div>
+            
+            <div class="steps">
+                <strong>Cómo usar:</strong>
+                <ol>
+                    <li>Arrastra el botón "🚀 Extraer Texto" a tu barra de marcadores</li>
+                    <li>Abre cualquier página web</li>
+                    <li>Haz clic en el marcador</li>
+                    <li>¡El texto se copia automáticamente y aparece una notificación!</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- MÉTODO 2: Script de consola -->
+        <div class="method">
+            <h2>💻 Método 2: Script de Consola</h2>
+            <p>Copia y pega este código en la consola del navegador (F12 → Console)</p>
+            
+            <div class="code-box">
+                <button class="copy-btn" onclick="copyCode()">📋 Copiar</button>
+                <pre id="codeScript">(function(){let t=document.body.innerText;let c=t.length;let w=t.split(/\s+/).filter(p=>p).length;console.clear();console.log('%c✅ TEXTO EXTRAÍDO','font-size:20px;font-weight:bold;color:#10b981;background:#d1fae5;padding:10px');console.log(`\n📊 ${c.toLocaleString()} caracteres | ${w.toLocaleString()} palabras\n`);navigator.clipboard.writeText(t).then(()=>{console.log('%c📋 ¡Copiado al portapapeles!','font-size:16px;color:#10b981;font-weight:bold')});window.textoExtraido=t;window.descargarTexto=function(){let b=new Blob([t],{type:'text/plain'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download='texto-'+Date.now()+'.txt';a.click();URL.revokeObjectURL(u);console.log('💾 Descargado!')};console.log('\n💡 Comandos disponibles:');console.log('  • descargarTexto() - Descarga como TXT');console.log('  • copy(textoExtraido) - Volver a copiar')})();</pre>
+            </div>
+            
+            <div class="steps">
+                <strong>Cómo usar:</strong>
+                <ol>
+                    <li>Abre la página web que quieres extraer</li>
+                    <li>Presiona <strong>F12</strong> (o Ctrl+Shift+I / Cmd+Option+I)</li>
+                    <li>Ve a la pestaña <strong>"Console"</strong></li>
+                    <li>Haz clic en <strong>"📋 Copiar"</strong> arriba</li>
+                    <li>Pega en la consola y presiona <strong>Enter</strong></li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- MÉTODO 3: Página con iframe -->
+        <div class="method">
+            <h2>🌐 Método 3: Extraer desde URL (Experimental)</h2>
+            <p>Ingresa una URL para intentar extraer su texto. <strong>Nota:</strong> Solo funciona con sitios que permitan ser cargados en iframe.</p>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <input type="text" id="urlInput" placeholder="https://ejemplo.com" style="flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                <button class="btn-primary" onclick="extraerDesdeURL()">Extraer</button>
+            </div>
+            
+            <div class="alert">
+                <strong>⚠️ Limitación:</strong>
+                Muchos sitios web bloquean ser cargados en iframes por seguridad. Si no funciona, usa el Método 1 o 2.
+            </div>
+            
+            <div id="resultado">
+                <h3>Resultado:</h3>
+                <div style="display: flex; gap: 10px; margin: 10px 0;">
+                    <button class="btn-success" onclick="copiarResultado()">📋 Copiar</button>
+                    <button class="btn-warning" onclick="descargarResultado()">💾 Descargar</button>
+                </div>
+                <textarea id="textoResultado" readonly></textarea>
+                <div class="stats" id="stats"></div>
+            </div>
+        </div>
+    </div>
+    
+    <iframe id="hiddenFrame" style="display: none;"></iframe>
+
+    <script>
+        function copyCode() {
+            const code = document.getElementById('codeScript').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const original = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = original;
+                    btn.style.background = '#667eea';
+                }, 2000);
+            });
+        }
+        
+        function extraerDesdeURL() {
+            const url = document.getElementById('urlInput').value.trim();
+            
+            if (!url) {
+                alert('Por favor, ingresa una URL');
+                return;
+            }
+            
+            try {
+                new URL(url);
+            } catch {
+                alert('URL inválida. Debe incluir http:// o https://');
+                return;
+            }
+            
+            const iframe = document.getElementById('hiddenFrame');
+            
+            iframe.onload = function() {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    const texto = doc.body.innerText || doc.body.textContent;
+                    
+                    document.getElementById('textoResultado').value = texto;
+                    document.getElementById('resultado').style.display = 'block';
+                    
+                    const chars = texto.length;
+                    const words = texto.split(/\s+/).filter(w => w).length;
+                    document.getElementById('stats').textContent = 
+                        `${chars.toLocaleString()} caracteres | ${words.toLocaleString()} palabras`;
+                    
+                    window.textoExtraidoURL = texto;
+                    
+                } catch (e) {
+                    alert('❌ Error: Este sitio bloquea el acceso desde iframes.\n\nPor favor, usa el Método 1 (Bookmarklet) o Método 2 (Consola) visitando directamente la página.');
+                    iframe.src = '';
+                }
+            };
+            
+            iframe.onerror = function() {
+                alert('❌ No se pudo cargar la página. El sitio puede estar bloqueando el acceso.');
+            };
+            
+            iframe.src = url;
+        }
+        
+        function copiarResultado() {
+            const texto = document.getElementById('textoResultado').value;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('✅ Texto copiado al portapapeles!');
+            });
+        }
+        
+        function descargarResultado() {
+            const texto = document.getElementById('textoResultado').value;
+            const blob = new Blob([texto], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `texto-${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
