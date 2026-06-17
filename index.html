@@ -1,346 +1,346 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extractor de Texto Automático</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
-        }
-        
-        h1 {
-            font-size: 2.5em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-        
-        .method {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 2px solid #e9ecef;
-        }
-        
-        .method h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-        
-        .method p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .button-area {
-            background: #fff;
-            border: 3px dashed #667eea;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        button, .btn-link {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            text-decoration: none;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-success {
-            background: #10b981;
-            color: white;
-        }
-        
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-        }
-        
-        .code-box {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            overflow-x: auto;
-            margin: 15px 0;
-            position: relative;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 8px 15px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .copy-btn:hover {
-            background: #5568d3;
-        }
-        
-        .steps {
-            background: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .steps ol {
-            margin-left: 20px;
-            color: #1e40af;
-            line-height: 1.8;
-        }
-        
-        .steps li {
-            margin: 8px 0;
-        }
-        
-        .alert {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            color: #92400e;
-        }
-        
-        .alert strong {
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        #resultado {
-            display: none;
-            margin-top: 20px;
-        }
-        
-        textarea {
-            width: 100%;
-            height: 300px;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            resize: vertical;
-            margin-top: 10px;
-        }
-        
-        .stats {
-            text-align: right;
-            color: #666;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extractor de texto</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#11161d; --panel2:#0c1117; --line:#232c36; --line2:#2a3542;
+    --txt:#e6edf3; --mut:#8b98a5; --mut2:#6f7d8c; --accent:#1f6feb; --accent2:#388bfd;
+    --green:#37c98a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 20% -10%, #14202e 0%, transparent 60%),
+      var(--bg);
+    color:var(--txt); line-height:1.55; min-height:100vh; padding:32px 18px;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+  header{margin-bottom:28px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut2);margin-bottom:8px}
+  h1{font-size:1.9rem;font-weight:650;letter-spacing:-.01em}
+  h1 .bar{color:var(--green)}
+  .lead{color:var(--mut);margin-top:8px;max-width:60ch}
+  .card{
+    background:var(--panel);border:1px solid var(--line2);border-radius:16px;
+    padding:24px;margin-top:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)
+  }
+  .card h2{font-size:1.05rem;font-weight:600;display:flex;align-items:center;gap:10px}
+  .num{
+    width:24px;height:24px;border-radius:7px;background:#16202c;border:1px solid var(--line2);
+    color:var(--green);font-size:12px;display:grid;place-items:center;font-weight:700
+  }
+  .card p{color:var(--mut);font-size:.92rem;margin-top:10px}
+  .drop{
+    margin-top:18px;border:1.5px dashed #2f3d4c;border-radius:12px;padding:22px;text-align:center;
+    background:linear-gradient(180deg,#0e141b,#0c1117)
+  }
+  .bm{
+    display:inline-block;text-decoration:none;font-weight:650;font-size:15px;color:#fff;
+    background:linear-gradient(135deg,var(--accent),#6e40c9);padding:13px 26px;border-radius:11px;
+    box-shadow:0 8px 22px rgba(31,111,235,.35);cursor:grab;user-select:none
+  }
+  .bm:active{cursor:grabbing}
+  .hint{margin-top:12px;font-size:12px;color:var(--mut2)}
+  ol.steps{margin:14px 0 0 0;list-style:none;counter-reset:s}
+  ol.steps li{
+    counter-increment:s;position:relative;padding:6px 0 6px 30px;color:var(--mut);font-size:.9rem
+  }
+  ol.steps li::before{
+    content:counter(s);position:absolute;left:0;top:6px;width:20px;height:20px;border-radius:6px;
+    background:#16202c;border:1px solid var(--line2);color:var(--green);font-size:11px;font-weight:700;
+    display:grid;place-items:center
+  }
+  .codewrap{position:relative;margin-top:16px}
+  .codewrap pre{
+    background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:16px;
+    overflow:auto;max-height:170px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:11.5px;color:#9fb0c0;white-space:pre-wrap;word-break:break-word
+  }
+  .copy{
+    position:absolute;top:10px;right:10px;border:1px solid var(--line2);background:#161d26;color:#cdd6e0;
+    border-radius:7px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer
+  }
+  .copy:hover{border-color:var(--accent);color:#fff}
+  .copy.ok{background:#238636;border-color:#238636;color:#fff}
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .feat div{background:#0e141b;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .feat b{display:block;color:var(--txt);font-size:.86rem;margin-bottom:3px}
+  .feat span{color:var(--mut2);font-size:.8rem}
+  footer{margin-top:26px;text-align:center;color:#4d5b6a;font-size:11px}
+  @media(max-width:520px){.feat{grid-template-columns:1fr}h1{font-size:1.55rem}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Extractor de Texto Automático</h1>
-        <p class="subtitle">Extrae texto de páginas web de forma automática</p>
-        
-        <!-- MÉTODO 1: Bookmarklet mejorado -->
-        <div class="method">
-            <h2>📌 Método 1: Bookmarklet (Recomendado)</h2>
-            <p>Arrastra este botón a tu barra de marcadores. Cuando hagas clic en él, extraerá el texto de la página actual automáticamente.</p>
-            
-            <div class="button-area">
-                <a href="javascript:(function(){let t=document.body.innerText;let c=t.length;let w=t.split(/\s+/).filter(p=>p).length;navigator.clipboard.writeText(t).then(()=>{let d=document.createElement('div');d.innerHTML=`<div style='position:fixed;top:20px;right:20px;background:linear-gradient(135deg,%2310b981,%23059669);color:white;padding:20px 30px;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,0.3);z-index:999999;font-family:system-ui,sans-serif;animation:slideIn 0.3s ease'><div style='font-size:24px;margin-bottom:10px'>✅ ¡Texto Copiado!</div><div style='font-size:14px;opacity:0.9'>${c.toLocaleString()} caracteres • ${w.toLocaleString()} palabras</div><div style='margin-top:15px;display:flex;gap:10px'><button onclick='descargar()' style='background:white;color:%2310b981;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600'>💾 Descargar</button><button onclick='this.parentElement.parentElement.parentElement.remove()' style='background:rgba(255,255,255,0.2);color:white;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600'>✕ Cerrar</button></div></div><style>@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}</style>`;document.body.appendChild(d);window.textoExtraido=t;window.descargar=function(){let b=new Blob([t],{type:'text/plain'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download='texto-'+Date.now()+'.txt';a.click();URL.revokeObjectURL(u)};setTimeout(()=>d.remove(),8000)}).catch(()=>{alert('Texto extraído:\n\n'+t.substring(0,500)+'...\n\n('+c+' caracteres)')})})();" class="btn-link btn-primary" draggable="true">
-                    🚀 Extraer Texto
-                </a>
-            </div>
-            
-            <div class="steps">
-                <strong>Cómo usar:</strong>
-                <ol>
-                    <li>Arrastra el botón "🚀 Extraer Texto" a tu barra de marcadores</li>
-                    <li>Abre cualquier página web</li>
-                    <li>Haz clic en el marcador</li>
-                    <li>¡El texto se copia automáticamente y aparece una notificación!</li>
-                </ol>
-            </div>
-        </div>
-        
-        <!-- MÉTODO 2: Script de consola -->
-        <div class="method">
-            <h2>💻 Método 2: Script de Consola</h2>
-            <p>Copia y pega este código en la consola del navegador (F12 → Console)</p>
-            
-            <div class="code-box">
-                <button class="copy-btn" onclick="copyCode()">📋 Copiar</button>
-                <pre id="codeScript">(function(){let t=document.body.innerText;let c=t.length;let w=t.split(/\s+/).filter(p=>p).length;console.clear();console.log('%c✅ TEXTO EXTRAÍDO','font-size:20px;font-weight:bold;color:#10b981;background:#d1fae5;padding:10px');console.log(`\n📊 ${c.toLocaleString()} caracteres | ${w.toLocaleString()} palabras\n`);navigator.clipboard.writeText(t).then(()=>{console.log('%c📋 ¡Copiado al portapapeles!','font-size:16px;color:#10b981;font-weight:bold')});window.textoExtraido=t;window.descargarTexto=function(){let b=new Blob([t],{type:'text/plain'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download='texto-'+Date.now()+'.txt';a.click();URL.revokeObjectURL(u);console.log('💾 Descargado!')};console.log('\n💡 Comandos disponibles:');console.log('  • descargarTexto() - Descarga como TXT');console.log('  • copy(textoExtraido) - Volver a copiar')})();</pre>
-            </div>
-            
-            <div class="steps">
-                <strong>Cómo usar:</strong>
-                <ol>
-                    <li>Abre la página web que quieres extraer</li>
-                    <li>Presiona <strong>F12</strong> (o Ctrl+Shift+I / Cmd+Option+I)</li>
-                    <li>Ve a la pestaña <strong>"Console"</strong></li>
-                    <li>Haz clic en <strong>"📋 Copiar"</strong> arriba</li>
-                    <li>Pega en la consola y presiona <strong>Enter</strong></li>
-                </ol>
-            </div>
-        </div>
-        
-        <!-- MÉTODO 3: Página con iframe -->
-        <div class="method">
-            <h2>🌐 Método 3: Extraer desde URL (Experimental)</h2>
-            <p>Ingresa una URL para intentar extraer su texto. <strong>Nota:</strong> Solo funciona con sitios que permitan ser cargados en iframe.</p>
-            
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <input type="text" id="urlInput" placeholder="https://ejemplo.com" style="flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
-                <button class="btn-primary" onclick="extraerDesdeURL()">Extraer</button>
-            </div>
-            
-            <div class="alert">
-                <strong>⚠️ Limitación:</strong>
-                Muchos sitios web bloquean ser cargados en iframes por seguridad. Si no funciona, usa el Método 1 o 2.
-            </div>
-            
-            <div id="resultado">
-                <h3>Resultado:</h3>
-                <div style="display: flex; gap: 10px; margin: 10px 0;">
-                    <button class="btn-success" onclick="copiarResultado()">📋 Copiar</button>
-                    <button class="btn-warning" onclick="descargarResultado()">💾 Descargar</button>
-                </div>
-                <textarea id="textoResultado" readonly></textarea>
-                <div class="stats" id="stats"></div>
-            </div>
-        </div>
-    </div>
-    
-    <iframe id="hiddenFrame" style="display: none;"></iframe>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Herramienta offline &middot; privacidad</div>
+    <h1>Extractor de texto <span class="bar">/</span></h1>
+    <p class="lead">Captura el texto de cualquier página web y lo entrega listo para copiar o descargar,
+    en texto plano o Markdown. Todo ocurre en tu navegador: no se envía nada a ningún servidor.</p>
+  </header>
 
-    <script>
-        function copyCode() {
-            const code = document.getElementById('codeScript').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                const original = btn.textContent;
-                btn.textContent = '✅ Copiado!';
-                btn.style.background = '#10b981';
-                setTimeout(() => {
-                    btn.textContent = original;
-                    btn.style.background = '#667eea';
-                }, 2000);
-            });
+  <section class="card">
+    <h2><span class="num">1</span> Marcador (recomendado)</h2>
+    <p>Arrastra este botón a tu barra de marcadores. Al pulsarlo en cualquier web, abre un panel
+    flotante con el texto extraído y opciones de ámbito y formato.</p>
+    <div class="drop">
+      <a class="bm" id="bm" href="#">Extraer texto</a>
+      <div class="hint">Arrástralo a la barra de marcadores &uarr;</div>
+    </div>
+    <div class="feat">
+      <div><b>Ámbito</b><span>Contenido principal, página completa o solo lo seleccionado.</span></div>
+      <div><b>Formato</b><span>Texto plano o Markdown (títulos, listas, enlaces, tablas).</span></div>
+      <div><b>Panel aislado</b><span>Shadow DOM: el CSS de la web no lo deforma. Se puede arrastrar.</span></div>
+      <div><b>Exportar</b><span>Copiar al portapapeles o descargar con nombre y fecha automáticos.</span></div>
+    </div>
+    <ol class="steps">
+      <li>Arrastra <b>Extraer texto</b> a la barra de marcadores.</li>
+      <li>Abre la web que quieras y, si te interesa, selecciona un fragmento.</li>
+      <li>Pulsa el marcador: ajusta ámbito/formato y copia o descarga.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">2</span> Consola del navegador</h2>
+    <p>Misma lógica, por si tu navegador restringe los marcadores. Copia el código,
+    abre la consola (<b>F12 &rarr; Console</b>), pégalo y pulsa Enter.</p>
+    <div class="codewrap">
+      <button class="copy" id="cpc">Copiar</button>
+      <pre id="code"></pre>
+    </div>
+  </section>
+
+  <footer>Sin dependencias externas &middot; funciona sin conexión &middot; un solo archivo</footer>
+</div>
+
+<script type="text/plain" id="src">(function () {
+  var ID = '__txx_panel__';
+  var old = document.getElementById(ID);
+  if (old) { old.remove(); return; }
+
+  /* ---------- extracción ---------- */
+  function linkDensity(el) {
+    var t = (el.innerText || '').trim().length || 1, l = 0;
+    el.querySelectorAll('a').forEach(function (a) { l += (a.innerText || '').length; });
+    return l / t;
+  }
+  function findMain() {
+    var pick = document.querySelector('article, main, [role="main"]');
+    if (pick && (pick.innerText || '').trim().length > 200) return pick;
+    var best = document.body, score = 0;
+    document.querySelectorAll('article, main, section, div').forEach(function (el) {
+      var txt = (el.innerText || '').trim();
+      if (txt.length < 200) return;
+      var meta = (el.className + ' ' + el.id).toString();
+      if (/nav|menu|footer|header|sidebar|comment|aside|cookie|banner|advert|social|share|related|widget|promo/i.test(meta)) return;
+      var s = txt.length * (1 - Math.min(linkDensity(el), 0.95)) + el.querySelectorAll('p').length * 25;
+      if (s > score) { score = s; best = el; }
+    });
+    return best;
+  }
+  function inl(node) {
+    var s = '';
+    node.childNodes.forEach(function (n) {
+      if (n.nodeType === 3) { s += n.textContent; return; }
+      if (n.nodeType !== 1) return;
+      var t = n.tagName.toLowerCase();
+      if (t === 'a') { var h = n.getAttribute('href') || ''; var x = inl(n).trim(); s += (h && x && h.indexOf('javascript:') !== 0) ? '[' + x + '](' + h + ')' : x; }
+      else if (t === 'strong' || t === 'b') s += '**' + inl(n).trim() + '**';
+      else if (t === 'em' || t === 'i') s += '_' + inl(n).trim() + '_';
+      else if (t === 'code') s += '`' + n.textContent + '`';
+      else if (t === 'br') s += '\n';
+      else s += inl(n);
+    });
+    return s;
+  }
+  function md(root) {
+    var out = [];
+    (function walk(el) {
+      el.childNodes.forEach(function (n) {
+        if (n.nodeType === 3) { var x0 = n.textContent.trim(); if (x0) out.push(x0); return; }
+        if (n.nodeType !== 1) return;
+        var t = n.tagName.toLowerCase();
+        if (/^(script|style|nav|footer|header|aside|noscript|svg|form|button|input|select|iframe)$/.test(t)) return;
+        if (/^h[1-6]$/.test(t)) out.push('\n' + new Array(+t[1] + 1).join('#') + ' ' + inl(n).trim());
+        else if (t === 'p') { var x = inl(n).trim(); if (x) out.push(x); }
+        else if (t === 'ul' || t === 'ol') {
+          var i = 1;
+          n.querySelectorAll(':scope > li').forEach(function (li) {
+            out.push((t === 'ol' ? (i++) + '. ' : '- ') + inl(li).trim());
+          });
         }
-        
-        function extraerDesdeURL() {
-            const url = document.getElementById('urlInput').value.trim();
-            
-            if (!url) {
-                alert('Por favor, ingresa una URL');
-                return;
-            }
-            
-            try {
-                new URL(url);
-            } catch {
-                alert('URL inválida. Debe incluir http:// o https://');
-                return;
-            }
-            
-            const iframe = document.getElementById('hiddenFrame');
-            
-            iframe.onload = function() {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    const texto = doc.body.innerText || doc.body.textContent;
-                    
-                    document.getElementById('textoResultado').value = texto;
-                    document.getElementById('resultado').style.display = 'block';
-                    
-                    const chars = texto.length;
-                    const words = texto.split(/\s+/).filter(w => w).length;
-                    document.getElementById('stats').textContent = 
-                        `${chars.toLocaleString()} caracteres | ${words.toLocaleString()} palabras`;
-                    
-                    window.textoExtraidoURL = texto;
-                    
-                } catch (e) {
-                    alert('❌ Error: Este sitio bloquea el acceso desde iframes.\n\nPor favor, usa el Método 1 (Bookmarklet) o Método 2 (Consola) visitando directamente la página.');
-                    iframe.src = '';
-                }
-            };
-            
-            iframe.onerror = function() {
-                alert('❌ No se pudo cargar la página. El sitio puede estar bloqueando el acceso.');
-            };
-            
-            iframe.src = url;
+        else if (t === 'blockquote') out.push('> ' + inl(n).trim());
+        else if (t === 'pre') out.push('```\n' + n.textContent.replace(/\s+$/, '') + '\n```');
+        else if (t === 'img') { if (n.src) out.push('![' + (n.alt || '') + '](' + n.src + ')'); }
+        else if (t === 'table') {
+          n.querySelectorAll('tr').forEach(function (tr) {
+            var cells = [];
+            tr.querySelectorAll('th,td').forEach(function (c) { cells.push(inl(c).trim().replace(/\|/g, '\\|')); });
+            if (cells.length) out.push('| ' + cells.join(' | ') + ' |');
+          });
         }
-        
-        function copiarResultado() {
-            const texto = document.getElementById('textoResultado').value;
-            navigator.clipboard.writeText(texto).then(() => {
-                alert('✅ Texto copiado al portapapeles!');
-            });
-        }
-        
-        function descargarResultado() {
-            const texto = document.getElementById('textoResultado').value;
-            const blob = new Blob([texto], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `texto-${Date.now()}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    </script>
+        else walk(n);
+      });
+    })(root);
+    return out.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+  function gather(scope, format) {
+    var sel = window.getSelection ? window.getSelection() : null;
+    var selText = sel ? sel.toString().trim() : '';
+    if (scope === 'seleccion') {
+      if (format === 'md' && sel && sel.rangeCount) {
+        var box = document.createElement('div');
+        for (var i = 0; i < sel.rangeCount; i++) box.appendChild(sel.getRangeAt(i).cloneContents());
+        return md(box);
+      }
+      return selText;
+    }
+    var node = scope === 'completa' ? document.body : findMain();
+    return format === 'md' ? md(node) : (node.innerText || '').trim();
+  }
+  function slug(s) {
+    return (s || 'pagina').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'pagina';
+  }
+
+  /* ---------- panel (Shadow DOM, aislado del CSS de la página) ---------- */
+  var host = document.createElement('div');
+  host.id = ID;
+  host.style.cssText = 'all:initial;position:fixed;top:16px;right:16px;z-index:2147483647;';
+  var root = host.attachShadow({ mode: 'open' });
+  (document.body || document.documentElement).appendChild(host);
+
+  var hasSel = !!gather('seleccion', 'texto');
+  var state = { scope: hasSel ? 'seleccion' : 'principal', format: 'texto' };
+
+  root.innerHTML =
+    '<style>' +
+    ':host,*{box-sizing:border-box;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
+    '.card{width:380px;max-width:92vw;background:#11161d;color:#e6edf3;border:1px solid #2a3542;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.55);overflow:hidden;font-size:13px}' +
+    '.hd{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#0c1117;border-bottom:1px solid #232c36;cursor:move;user-select:none}' +
+    '.dot{width:9px;height:9px;border-radius:50%;background:#37c98a;box-shadow:0 0 8px #37c98a}' +
+    '.ttl{font-weight:600;letter-spacing:.02em;flex:1}' +
+    '.x{cursor:pointer;border:none;background:transparent;color:#8b98a5;font-size:16px;line-height:1;padding:4px 6px;border-radius:6px}' +
+    '.x:hover{background:#1d2630;color:#fff}' +
+    '.body{padding:12px}' +
+    '.row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}' +
+    '.lbl{width:100%;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#6f7d8c;margin:0 0 2px}' +
+    '.chip{flex:1;min-width:0;cursor:pointer;border:1px solid #2a3542;background:#161d26;color:#aeb9c4;padding:7px 4px;border-radius:8px;font-size:12px;font-weight:500;transition:.12s;text-align:center}' +
+    '.chip:hover:not(:disabled){border-color:#3a82f6;color:#fff}' +
+    '.chip[aria-pressed="true"]{background:#1e3a5f;border-color:#3a82f6;color:#fff}' +
+    '.chip:disabled{opacity:.35;cursor:not-allowed}' +
+    'textarea{width:100%;height:200px;resize:vertical;background:#0c1117;color:#cdd6e0;border:1px solid #232c36;border-radius:8px;padding:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.55}' +
+    'textarea:focus{outline:none;border-color:#3a82f6}' +
+    '.ft{display:flex;align-items:center;gap:8px;margin-top:10px}' +
+    '.cnt{flex:1;color:#6f7d8c;font-size:11px}' +
+    '.btn{cursor:pointer;border:none;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;color:#fff}' +
+    '.cp{background:#1f6feb}.cp:hover{background:#388bfd}' +
+    '.dl{background:#21262d;border:1px solid #2a3542}.dl:hover{background:#2a313b}' +
+    '.ok{background:#238636!important}' +
+    '</style>' +
+    '<div class="card">' +
+    '<div class="hd" id="hd"><span class="dot"></span><span class="ttl">Extractor de texto</span><button class="x" id="x" title="Cerrar">\u2715</button></div>' +
+    '<div class="body">' +
+    '<div class="row"><span class="lbl">\u00c1mbito</span>' +
+    '<button class="chip" data-s="principal">Contenido</button>' +
+    '<button class="chip" data-s="completa">P\u00e1gina</button>' +
+    '<button class="chip" data-s="seleccion"' + (hasSel ? '' : ' disabled') + '>Selecci\u00f3n</button></div>' +
+    '<div class="row"><span class="lbl">Formato</span>' +
+    '<button class="chip" data-f="texto">Texto plano</button>' +
+    '<button class="chip" data-f="md">Markdown</button></div>' +
+    '<textarea id="ta" spellcheck="false"></textarea>' +
+    '<div class="ft"><span class="cnt" id="cnt"></span>' +
+    '<button class="btn dl" id="dl">Descargar</button>' +
+    '<button class="btn cp" id="cp">Copiar</button></div>' +
+    '</div></div>';
+
+  var $ = function (s) { return root.querySelector(s); };
+  var ta = $('#ta'), cnt = $('#cnt');
+
+  function render(copy) {
+    root.querySelectorAll('[data-s]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === state.scope); });
+    root.querySelectorAll('[data-f]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.f === state.format); });
+    var txt = gather(state.scope, state.format);
+    ta.value = txt;
+    var c = txt.length, w = txt.split(/\s+/).filter(Boolean).length;
+    cnt.textContent = c.toLocaleString('es-ES') + ' car. \u00b7 ' + w.toLocaleString('es-ES') + ' pal.';
+    if (copy) doCopy();
+  }
+  function doCopy() {
+    var cp = $('#cp');
+    function ok() { cp.textContent = '\u2713 Copiado'; cp.classList.add('ok'); setTimeout(function () { cp.textContent = 'Copiar'; cp.classList.remove('ok'); }, 1400); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ta.value).then(ok, function () { ta.select(); document.execCommand('copy'); ok(); });
+    } else { ta.select(); document.execCommand('copy'); ok(); }
+  }
+
+  root.querySelectorAll('[data-s]').forEach(function (b) { b.onclick = function () { state.scope = b.dataset.s; render(false); }; });
+  root.querySelectorAll('[data-f]').forEach(function (b) { b.onclick = function () { state.format = b.dataset.f; render(false); }; });
+  $('#cp').onclick = doCopy;
+  $('#x').onclick = function () { host.remove(); };
+  $('#dl').onclick = function () {
+    var ext = state.format === 'md' ? '.md' : '.txt';
+    var d = new Date(), p = function (n) { return ('0' + n).slice(-2); };
+    var name = slug(document.title) + '_' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + ext;
+    var b = new Blob([ta.value], { type: 'text/plain;charset=utf-8' });
+    var u = URL.createObjectURL(b), a = document.createElement('a');
+    a.href = u; a.download = name; a.click(); setTimeout(function () { URL.revokeObjectURL(u); }, 1000);
+  };
+
+  /* arrastrar el panel por la cabecera */
+  (function () {
+    var hd = $('#hd'), dx = 0, dy = 0, drag = false;
+    hd.addEventListener('pointerdown', function (e) {
+      if (e.target.id === 'x') return;
+      drag = true; var r = host.getBoundingClientRect();
+      dx = e.clientX - r.left; dy = e.clientY - r.top;
+      host.style.right = 'auto'; hd.setPointerCapture(e.pointerId);
+    });
+    hd.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      host.style.left = Math.max(0, e.clientX - dx) + 'px';
+      host.style.top = Math.max(0, e.clientY - dy) + 'px';
+    });
+    hd.addEventListener('pointerup', function () { drag = false; });
+  })();
+
+  render(true);
+})();</script>
+<script>
+(function(){
+  var src = document.getElementById('src').textContent.trim();
+  // Bookmarklet: javascript: + IIFE codificada
+  document.getElementById('bm').href = 'javascript:' + encodeURIComponent(src);
+  // Versión consola: la misma fuente, legible
+  document.getElementById('code').textContent = src;
+
+  function wire(btnId, getText){
+    var b = document.getElementById(btnId);
+    b.addEventListener('click', function(){
+      var t = getText();
+      var done = function(){ b.textContent='✓ Copiado'; b.classList.add('ok');
+        setTimeout(function(){ b.textContent='Copiar'; b.classList.remove('ok'); },1500); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(t).then(done, function(){ fallback(t); done(); });
+      } else { fallback(t); done(); }
+    });
+  }
+  function fallback(t){
+    var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove();
+  }
+  wire('cpc', function(){ return document.getElementById('code').textContent; });
+
+  // El marcador no debe poder pulsarse desde aquí (se arrastra, no se hace clic)
+  document.getElementById('bm').addEventListener('click', function(e){
+    e.preventDefault();
+    alert('Este botón se arrastra a la barra de marcadores; luego se pulsa estando en otra web.');
+  });
+})();
+</script>
 </body>
 </html>
